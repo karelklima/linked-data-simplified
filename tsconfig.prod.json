@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["test/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "*": ["*"],
+    },
+    "plugins": [{
+      "transform": "@zerollup/ts-transform-paths",
+    }],
+    "module": "CommonJS",
+    "target": "Es2018",
+    "lib": ["dom", "esnext"],
+    "emitDecoratorMetadata": true,
+    "importHelpers": false,
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "noEmit": false,
+    "esModuleInterop": true,
+  }
+}
