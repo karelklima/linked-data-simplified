@@ -4,7 +4,7 @@ export * from 'namespaces'
 
 export * from 'schema/keys'
 
-export { createResource } from 'resources/resource'
+export { createAccess } from 'access/access'
 
 export {
   DataSources,

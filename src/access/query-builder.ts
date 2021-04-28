@@ -15,8 +15,6 @@ export const getObjectByIriQuery = (iri: Iri, schema: Schema) => {
 
   const query = CONSTRUCT`${conditions}`.WHERE`${conditions}`.build()
 
-  console.log(query)
-
   return query
 }
 
@@ -36,7 +34,6 @@ const getConditionsFromSchema = (
     })
 
     Object.keys(properties).forEach((prop, index) => {
-      console.error(prop)
       const property = properties[prop]
       if (wrapOptional && property[$META].includes($OPTIONAL)) {
         conditions.push($`\nOPTIONAL {`)
@@ -86,7 +83,28 @@ export const findIrisQuery = (schema: Schema) => {
 
   const query = SELECT`${variable('iri')}`.WHERE`${conditions}`.build()
 
-  console.log(query)
+  return query
+}
 
+const getPartialSelectQuery = (schema: Schema, offset = 0, limit = 1000) => {
+  const conditions = new Array<Quad | ReturnType<typeof $>>()
+  schema[$TYPE].forEach((type) => {
+    conditions.push($`${variable('res')} a ${namedNode(type)} .`)
+  })
+
+  return SELECT`${variable('res')}`.WHERE`${conditions}`
+    .OFFSET(offset)
+    .LIMIT(limit)
+    .build()
+}
+
+/* const getPartialBindQuery = (iris: Iri[]) => {
+  return $`VALUES ?res { ${iris.map(namedNode)} }`
+} */
+
+export const findQuery = (schema: Schema) => {
+  const query = CONSTRUCT`${getConditionsFromSchema(schema, 'res', false)}`
+    .WHERE`{ ${getPartialSelectQuery(schema)} }
+    ${getConditionsFromSchema(schema, 'res', true)}`.build()
   return query
 }

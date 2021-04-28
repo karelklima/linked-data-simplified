@@ -2,9 +2,6 @@
   "include": ["src/**/*.ts", "test/**/*.ts"],
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {
-      "*": ["*"],
-    },
     "experimentalDecorators": true,
     "importHelpers": false,
     "noEmit": true,
@@ -14,6 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "jsx": "react",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
